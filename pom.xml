@@ -5,7 +5,7 @@
 	<artifactId>CoralReefTest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<dependencies>
+	<!--   <dependencies>
 		<dependency>
 			<groupId>org.uma.jmetal</groupId>
 			<artifactId>jmetal-core</artifactId>
@@ -28,8 +28,8 @@
 			<groupId>org.uma.jmetal</groupId>
 			<artifactId>jmetal-exec</artifactId>
 			<version>5.1</version>
-		</dependency>
-	</dependencies>
+		</dependency> 
+	</dependencies> -->
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
