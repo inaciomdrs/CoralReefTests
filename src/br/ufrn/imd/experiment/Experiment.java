@@ -15,14 +15,12 @@ public abstract class Experiment<S extends Solution<?>> {
 	}
 	
 	public abstract void configureAlgorithm();
-	public abstract void configureProblem();
 	public abstract void configureMeasures();
 	public abstract void runAlgorithm();
 	public abstract S    getResult();
 	
 	public S executeExperiment(){
 		configureAlgorithm();
-		configureProblem();
 		configureMeasures();
 		runAlgorithm();
 		return getResult();

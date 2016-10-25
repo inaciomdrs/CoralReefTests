@@ -5,8 +5,10 @@ public class ExperimentInformation<S> {
 	private S bestSolution;
 	private long timeElapsed;
 	private int problemLength;
+	private boolean validPopulationSize;
 	
 	public ExperimentInformation(){
+		validPopulationSize = true;
 	}
 	
 	public S getBestSolution() {
@@ -26,6 +28,12 @@ public class ExperimentInformation<S> {
 	}
 	public void setProblemLength(int problemLength) {
 		this.problemLength = problemLength;
+	}
+	public boolean isValidPopulationSize() {
+		return validPopulationSize;
+	}
+	public void setValidPopulationSize(boolean validPopulationSize) {
+		this.validPopulationSize = validPopulationSize;
 	}
 	
 }

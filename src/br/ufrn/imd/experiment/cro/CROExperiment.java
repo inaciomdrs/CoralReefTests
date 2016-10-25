@@ -1,29 +1,48 @@
 package br.ufrn.imd.experiment.cro;
 
+import java.util.List;
+
 import org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization.CoralReefsOptimizationWithMeasures;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.impl.BasicMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
+import br.imd.ufrn.conditions.PopulationSizeCondition;
 import br.ufrn.imd.experiment.Experiment;
+import br.ufrn.imd.experiment.ExperimentInformation;
 
-public abstract class CROExperiment<S extends Solution<?>> extends Experiment<S> {
+public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 
 	private CoralReefsOptimizationWithMeasures<S> coralReefsOptimizationAlgorithm;
+	private Problem<S> problem;
 	private CrossoverOperator<S> crossoverOperator;
 	private MutationOperator<S> mutationOperator;
-	private SelectionOperator<?, ?> selectionOperator;
-	
-	private static class ActualPopulationListener implements MeasureListener<Integer> {
+	private SelectionOperator<List<S>, S> selectionOperator;
 
-		@Override
-		public void measureGenerated(Integer value) {
-			
-		}
-		
+	private ExperimentInformation<S> experimentInformation;
+	private PopulationSizeCondition populationCondition;
+
+	public CROExperiment(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
+			MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator,
+			ExperimentInformation<S> experimentInformation) {
+		this.problem = problem;
+		this.crossoverOperator = crossoverOperator;
+		this.mutationOperator = mutationOperator;
+		this.selectionOperator = selectionOperator;
+
+		int maxPopulationSize = this.coralReefsOptimizationAlgorithm.getM()
+				* this.coralReefsOptimizationAlgorithm.getN();
+		int minPopulationSize = (int) Math
+				.round(maxPopulationSize * this.getCoralReefsOptimizationAlgorithm().getRho());
+
+		this.populationCondition = new PopulationSizeCondition(maxPopulationSize, minPopulationSize);
+
+		this.experimentInformation = experimentInformation;
 	}
 
 	public CoralReefsOptimizationWithMeasures<S> getCoralReefsOptimizationAlgorithm() {
@@ -55,34 +74,78 @@ public abstract class CROExperiment<S extends Solution<?>> extends Experiment<S>
 		return selectionOperator;
 	}
 
-	public void setSelectionOperator(SelectionOperator<?, ?> selectionOperator) {
+	public void setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
 		this.selectionOperator = selectionOperator;
 	}
-	
+
+	public ExperimentInformation<S> getExperimentInformation() {
+		return experimentInformation;
+	}
+
+	public void setExperimentInformation(ExperimentInformation<S> experimentInformation) {
+		this.experimentInformation = experimentInformation;
+	}
+
+	public Problem<S> getProblem() {
+		return problem;
+	}
+
+	public void setProblem(Problem<S> problem) {
+		this.problem = problem;
+	}
+
+	public PopulationSizeCondition getPopulationCondition() {
+		return populationCondition;
+	}
+
+	public void setPopulationCondition(PopulationSizeCondition populationCondition) {
+		this.populationCondition = populationCondition;
+	}
+
 	@Override
-	public void configureMeasures(){
+	public void configureAlgorithm() {
+		this.coralReefsOptimizationAlgorithm = new CoralReefsOptimizationWithMeasures<S>(this.problem, 1000, 
+				new ObjectiveComparator<S>(0), this.selectionOperator, this.crossoverOperator, this.mutationOperator, 
+				10, 10, 0.6, 0.9, 0.1, 0.1, 3);
+	}
+
+	@Override
+	public void configureMeasures() {
 		setMeasureManager(coralReefsOptimizationAlgorithm.getMeasureManager());
 
 		BasicMeasure<Integer> actualPopulation = (BasicMeasure<Integer>) getMeasureManager()
 				.<Integer> getPushMeasure("actualPopulationSize");
-		
+
 		actualPopulation.register(new ActualPopulationListener());
 	}
 
 	@Override
 	public void runAlgorithm() {
 		Thread algorithmThread = new Thread(coralReefsOptimizationAlgorithm);
-	    algorithmThread.start();
-	    try {
+		algorithmThread.start();
+
+		long initialTime = System.currentTimeMillis();
+
+		try {
 			algorithmThread.join();
-		} catch (InterruptedException e) {}
-	    
+		} catch (InterruptedException e) {
+		}
+
+		this.experimentInformation.setTimeElapsed(System.currentTimeMillis() - initialTime);
 	}
 
 	@Override
 	public S getResult() {
-		// TODO Auto-generated method stub
-		return null;
+		S bestSolution = this.coralReefsOptimizationAlgorithm.getResult().get(0);
+		return bestSolution;
 	}
 
+	private class ActualPopulationListener implements MeasureListener<Integer> {
+		@Override
+		public void measureGenerated(Integer value) {
+			if (experimentInformation.isValidPopulationSize()) {
+				experimentInformation.setValidPopulationSize(populationCondition.test(value));
+			}
+		}
+	}
 }
