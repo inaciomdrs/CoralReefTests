@@ -12,7 +12,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
-import br.imd.ufrn.conditions.PopulationSizeCondition;
+import br.ufrn.imd.conditions.PopulationSizeCondition;
 import br.ufrn.imd.experiment.Experiment;
 import br.ufrn.imd.experiment.ExperimentInformation;
 

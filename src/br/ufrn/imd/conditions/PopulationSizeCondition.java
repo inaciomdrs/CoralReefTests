@@ -1,4 +1,4 @@
-package br.imd.ufrn.conditions;
+package br.ufrn.imd.conditions;
 
 import java.util.function.Predicate;
 
