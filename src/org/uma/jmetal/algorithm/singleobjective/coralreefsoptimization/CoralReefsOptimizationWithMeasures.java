@@ -46,6 +46,8 @@ public class CoralReefsOptimizationWithMeasures<S extends Solution<?>>
 		this.problem = problem;
 		this.maxEvaluations = maxEvaluations; 
 		this.random = new MersenneTwisterGenerator();
+		
+		initMeasure();
 	}
 
 	private static final long serialVersionUID = 3013223456538143239L;
@@ -59,15 +61,12 @@ public class CoralReefsOptimizationWithMeasures<S extends Solution<?>>
 	
 	@Override
 	protected void initProgress() {
-		initMeasure();
-		
 		evaluations = 0;
 	}
 
 	@Override
 	protected void updateProgress() {
 		actualPopulationSize.push(population.size());
-		
 		evaluations++;
 	}
 

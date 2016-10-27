@@ -5,42 +5,42 @@ import java.util.List;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 
 import br.ufrn.imd.experiment.ExperimentInformation;
 import br.ufrn.imd.experiment.cro.CROExperiment;
 
 public class CROExperimentRunner {
 
-	private Problem<IntegerSolution> problem;
+	private Problem<DoubleSolution> problem;
 	
-	private CrossoverOperator<IntegerSolution> crossoverOperator;
-	private MutationOperator<IntegerSolution> mutationOperator;
-	private SelectionOperator<List<IntegerSolution>, IntegerSolution> selectionOperator;
+	private CrossoverOperator<DoubleSolution> crossoverOperator;
+	private MutationOperator<DoubleSolution> mutationOperator;
+	private SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator;
 	
-	public CROExperimentRunner(Problem<IntegerSolution> problem) {
+	public CROExperimentRunner(Problem<DoubleSolution> problem) {
 		this.problem = problem;
 		
 		double crossoverProbability = 0.9 ;
 	    double crossoverDistributionIndex = 20.0 ;
-	    crossoverOperator = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+	    crossoverOperator = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
 	    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
 	    double mutationDistributionIndex = 20.0 ;
-	    mutationOperator = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+	    mutationOperator = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-	    selectionOperator = new BinaryTournamentSelection<IntegerSolution>() ;
+	    selectionOperator = new BinaryTournamentSelection<DoubleSolution>() ;
 	}
 	
-	public ExperimentInformation<IntegerSolution> runExperiment(){
-		ExperimentInformation<IntegerSolution> experimentInformation = new ExperimentInformation<IntegerSolution>();
+	public ExperimentInformation<DoubleSolution> runExperiment(){
+		ExperimentInformation<DoubleSolution> experimentInformation = new ExperimentInformation<DoubleSolution>();
 		experimentInformation.setProblemLength(problem.getNumberOfVariables());
 		
-		CROExperiment<IntegerSolution> experiment = new CROExperiment<>(problem, crossoverOperator, mutationOperator, selectionOperator, experimentInformation);
+		CROExperiment<DoubleSolution> experiment = new CROExperiment<>(problem, crossoverOperator, mutationOperator, selectionOperator, experimentInformation);
 		experimentInformation.setBestSolution(experiment.executeExperiment());
 		
 		return experimentInformation;

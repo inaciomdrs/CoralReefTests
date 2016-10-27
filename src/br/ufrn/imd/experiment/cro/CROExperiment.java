@@ -35,13 +35,6 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 		this.mutationOperator = mutationOperator;
 		this.selectionOperator = selectionOperator;
 
-		int maxPopulationSize = this.coralReefsOptimizationAlgorithm.getM()
-				* this.coralReefsOptimizationAlgorithm.getN();
-		int minPopulationSize = (int) Math
-				.round(maxPopulationSize * this.getCoralReefsOptimizationAlgorithm().getRho());
-
-		this.populationCondition = new PopulationSizeCondition(maxPopulationSize, minPopulationSize);
-
 		this.experimentInformation = experimentInformation;
 	}
 
@@ -107,6 +100,13 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 		this.coralReefsOptimizationAlgorithm = new CoralReefsOptimizationWithMeasures<S>(this.problem, 1000, 
 				new ObjectiveComparator<S>(0), this.selectionOperator, this.crossoverOperator, this.mutationOperator, 
 				10, 10, 0.6, 0.9, 0.1, 0.1, 3);
+		
+		int maxPopulationSize = this.coralReefsOptimizationAlgorithm.getM()
+				* this.coralReefsOptimizationAlgorithm.getN();
+		int minPopulationSize = (int) Math
+				.round(maxPopulationSize * this.getCoralReefsOptimizationAlgorithm().getRho());
+		
+		this.populationCondition = new PopulationSizeCondition(maxPopulationSize, minPopulationSize);
 	}
 
 	@Override
