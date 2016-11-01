@@ -97,9 +97,18 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 
 	@Override
 	public void configureAlgorithm() {
-		this.coralReefsOptimizationAlgorithm = new CoralReefsOptimizationWithMeasures<S>(this.problem, 1000, 
+		int numberEvaluations = 1000;
+		int n = 10;
+		int m = 10;
+		double rho = 0.6; 
+		double fbs = 0.9;
+		double fa = 0.1;
+		double pd = 0.1;
+		int attemptsToSettle = 3;
+		
+		this.coralReefsOptimizationAlgorithm = new CoralReefsOptimizationWithMeasures<S>(this.problem, numberEvaluations, 
 				new ObjectiveComparator<S>(0), this.selectionOperator, this.crossoverOperator, this.mutationOperator, 
-				10, 10, 0.6, 0.9, 0.1, 0.1, 3);
+				n, m, rho, fbs, fa, pd, attemptsToSettle);
 		
 		int maxPopulationSize = this.coralReefsOptimizationAlgorithm.getM()
 				* this.coralReefsOptimizationAlgorithm.getN();
@@ -143,9 +152,9 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 	private class ActualPopulationListener implements MeasureListener<Integer> {
 		@Override
 		public void measureGenerated(Integer value) {
-			if (experimentInformation.isValidPopulationSize()) {
+//			if (experimentInformation.isValidPopulationSize()) {
 				experimentInformation.setValidPopulationSize(populationCondition.test(value));
-			}
+//			}
 		}
 	}
 }

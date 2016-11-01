@@ -14,16 +14,19 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 import br.ufrn.imd.experiment.ExperimentInformation;
 import br.ufrn.imd.runner.CROExperimentRunner;
+import br.ufrn.imd.test.AbstractTest;
+import br.ufrn.imd.test.PopulationExceededLimitsTest;
+import br.ufrn.imd.test.SolutionIsUnderFitnessReferenceTest;
 
 public class Main {
-
+	
 	public static void main(String[] args) {
 		List<DoubleProblem> problems = new LinkedList<DoubleProblem>();
 
-		int problemLength = 10;
+		int problemLength = 4;
 
 		problems.add(new Schaffer());
-		problems.add(new Sphere());
+		problems.add(new Sphere(problemLength));
 		problems.add(new Rosenbrock(problemLength));
 		problems.add(new Rastrigin(problemLength));
 		problems.add(new Griewank(problemLength));
@@ -34,10 +37,23 @@ public class Main {
 		for (DoubleProblem doubleProblem : problems) {
 			information = runExperimentForProblem(doubleProblem);
 			
-			System.out.println(information.getTimeElapsed() + "\t" + information.isValidPopulationSize() + "\t"
-					+ information.getBestSolution().getObjective(0));
+			System.out.print(doubleProblem.getName() + " - ");
+			
+			runTest(new PopulationExceededLimitsTest<>(information));
+			runTest(new SolutionIsUnderFitnessReferenceTest<>(information, 0.5));
+			
+			System.out.println();
 		}
 
+	}
+	
+	public static void runTest(AbstractTest<DoubleSolution> tester){
+		try {
+			tester.test();	
+			System.out.print(" [" + tester.getName() + " Passed!]");
+		} catch(AssertionError ex){
+			System.out.print(" [" + tester.getName() + " Failed!]");
+		}
 	}
 
 	public static ExperimentInformation<DoubleSolution> runExperimentForProblem(Problem<DoubleSolution> problem) {
