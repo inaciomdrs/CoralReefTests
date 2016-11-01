@@ -14,6 +14,8 @@ public class PopulationSizeCondition implements Predicate<Integer> {
 	
 	@Override
 	public boolean test(Integer t) {
+//		System.out.println(minimumPopulationSizeReference + " " + t + " " + populationSizeReference);
+		
 		return (t >= minimumPopulationSizeReference) && (t <= populationSizeReference);
 	}
 

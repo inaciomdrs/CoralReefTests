@@ -1,6 +1,8 @@
 package br.ufrn.imd.experiment;
 
-public class ExperimentInformation<S> {
+import org.uma.jmetal.solution.Solution;
+
+public class ExperimentInformation<S extends Solution<?>> {
 
 	private S bestSolution;
 	private long timeElapsed;

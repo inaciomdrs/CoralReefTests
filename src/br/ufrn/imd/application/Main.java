@@ -33,6 +33,7 @@ public class Main {
 		ExperimentInformation<DoubleSolution> information;
 		for (DoubleProblem doubleProblem : problems) {
 			information = runExperimentForProblem(doubleProblem);
+			
 			System.out.println(information.getTimeElapsed() + "\t" + information.isValidPopulationSize() + "\t"
 					+ information.getBestSolution().getObjective(0));
 		}
