@@ -1,5 +1,10 @@
 package org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.uma.jmetal.algorithm.impl.AbstractCoralReefsOptimization;
 import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.measure.MeasureManager;
@@ -11,11 +16,6 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * 
@@ -32,6 +32,7 @@ public class CoralReefsOptimizationWithMeasures<S extends Solution<?>>
 	
 	private SimpleMeasureManager measureManager;
 	private BasicMeasure<Integer> actualPopulationSize;
+	private BasicMeasure<Double>  bestSolutionFitness;
 	
 	public CoralReefsOptimizationWithMeasures(Problem<S> problem,
 			int maxEvaluations, Comparator<S> comparator,
@@ -54,9 +55,11 @@ public class CoralReefsOptimizationWithMeasures<S extends Solution<?>>
 
 	private void initMeasure(){
 		actualPopulationSize = new BasicMeasure<>();
+		bestSolutionFitness = new BasicMeasure<>();
 		
 		measureManager = new SimpleMeasureManager();
 		measureManager.setPushMeasure("actualPopulationSize", actualPopulationSize);
+		measureManager.setPushMeasure("bestSolutionFitness", bestSolutionFitness);
 	}
 	
 	@Override
@@ -67,6 +70,7 @@ public class CoralReefsOptimizationWithMeasures<S extends Solution<?>>
 	@Override
 	protected void updateProgress() {
 		actualPopulationSize.push(population.size());
+		bestSolutionFitness.push(population.get(0).getObjective(0));
 		evaluations++;
 	}
 

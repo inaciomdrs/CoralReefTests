@@ -8,6 +8,7 @@ public class ExperimentInformation<S extends Solution<?>> {
 	private long timeElapsed;
 	private int problemLength;
 	private boolean validPopulationSize;
+	private boolean algorithmConverges;
 	
 	public ExperimentInformation(){
 		validPopulationSize = true;
@@ -36,6 +37,12 @@ public class ExperimentInformation<S extends Solution<?>> {
 	}
 	public void setValidPopulationSize(boolean validPopulationSize) {
 		this.validPopulationSize = validPopulationSize;
+	}
+	public boolean isAlgorithmConverges() {
+		return algorithmConverges;
+	}
+	public void setAlgorithmConverges(boolean algorithmConverges) {
+		this.algorithmConverges = algorithmConverges;
 	}
 	
 }

@@ -13,6 +13,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import br.ufrn.imd.conditions.PopulationSizeCondition;
+import br.ufrn.imd.conditions.SolutionCovergenceCondition;
 import br.ufrn.imd.experiment.Experiment;
 import br.ufrn.imd.experiment.ExperimentInformation;
 
@@ -26,6 +27,9 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 
 	private ExperimentInformation<S> experimentInformation;
 	private PopulationSizeCondition populationCondition;
+	private SolutionCovergenceCondition solutionConvergenceCondition;
+	
+	private double baseFitness;
 
 	public CROExperiment(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
 			MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator,
@@ -36,6 +40,8 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 		this.selectionOperator = selectionOperator;
 
 		this.experimentInformation = experimentInformation;
+		
+		this.baseFitness = Double.MAX_VALUE;
 	}
 
 	public CoralReefsOptimizationWithMeasures<S> getCoralReefsOptimizationAlgorithm() {
@@ -124,8 +130,12 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 
 		BasicMeasure<Integer> actualPopulation = (BasicMeasure<Integer>) getMeasureManager()
 				.<Integer> getPushMeasure("actualPopulationSize");
+		
+		BasicMeasure<Double> solutionConvergence = (BasicMeasure<Double>) getMeasureManager()
+				.<Double> getPushMeasure("bestSolutionFitness");
 
 		actualPopulation.register(new ActualPopulationListener());
+		solutionConvergence.register(new SolutionConvergenceListener());
 	}
 
 	@Override
@@ -152,9 +162,17 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 	private class ActualPopulationListener implements MeasureListener<Integer> {
 		@Override
 		public void measureGenerated(Integer value) {
-//			if (experimentInformation.isValidPopulationSize()) {
 				experimentInformation.setValidPopulationSize(populationCondition.test(value));
-//			}
 		}
 	}
+	
+	private class SolutionConvergenceListener implements MeasureListener<Double> {
+		@Override
+		public void measureGenerated(Double value) {
+			solutionConvergenceCondition = new SolutionCovergenceCondition(baseFitness);
+			experimentInformation.setAlgorithmConverges(solutionConvergenceCondition.test(value));
+			baseFitness = value;
+		}
+	}
+	
 }
