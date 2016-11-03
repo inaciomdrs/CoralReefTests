@@ -103,7 +103,7 @@ public class CROExperiment<S extends Solution<?>> extends Experiment<S> {
 
 	@Override
 	public void configureAlgorithm() {
-		int numberEvaluations = 1000;
+		int numberEvaluations = 10000;
 		int n = 10;
 		int m = 10;
 		double rho = 0.6; 
