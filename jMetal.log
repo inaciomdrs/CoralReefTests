@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2016-11-03T19:32:23</date>
-  <millis>1478212343286</millis>
+  <date>2016-11-03T20:01:31</date>
+  <millis>1478214091795</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,17 +13,17 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2016-11-03T19:32:23</date>
-  <millis>1478212343353</millis>
+  <date>2016-11-03T20:01:31</date>
+  <millis>1478214091848</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>SEVERE</level>
-  <class>org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark</class>
-  <method>loadRowVectorFromFile</method>
+  <class>org.uma.jmetal.util.JMetalException</class>
+  <method>&lt;init&gt;</method>
   <thread>1</thread>
   <message>Error in Benchmark.java</message>
   <exception>
-    <message>java.io.FileNotFoundException: file:/home/inacio-medeiros/.m2/repository/org/uma/jmetal/jmetal-core/5.1/jmetal-core-5.1.jar!/cec2005CompetitionResources/supportData/fbias_data.txt (No such file or directory)</message>
+    <message>java.io.FileNotFoundException: file:/home/inacio-medeiros/.m2/repository/org/uma/jmetal/jmetal-core/5.1/jmetal-core-5.1.jar!/cec2005CompetitionResources/supportData/schwefel_213_data.txt (No such file or directory)</message>
     <frame>
       <class>java.io.FileInputStream</class>
       <method>open0</method>
@@ -45,23 +45,23 @@
     </frame>
     <frame>
       <class>org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark</class>
-      <method>loadRowVectorFromFile</method>
-      <line>506</line>
+      <method>loadMatrixFromFile</method>
+      <line>572</line>
     </frame>
     <frame>
-      <class>org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark</class>
+      <class>org.uma.jmetal.problem.singleobjective.cec2005competitioncode.F12Schwefel</class>
       <method>&lt;init&gt;</method>
-      <line>133</line>
+      <line>90</line>
     </frame>
     <frame>
-      <class>org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark</class>
-      <method>&lt;init&gt;</method>
-      <line>126</line>
+      <class>br.ufrn.imd.application.Main</class>
+      <method>executeTests</method>
+      <line>53</line>
     </frame>
     <frame>
       <class>br.ufrn.imd.application.Main</class>
       <method>main</method>
-      <line>27</line>
+      <line>34</line>
     </frame>
   </exception>
 </record>
