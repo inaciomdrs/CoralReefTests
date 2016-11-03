@@ -28,6 +28,12 @@ public class Main {
 		if(args.length == 1){
 			try {
 				problemLength = Integer.parseInt(args[0]);
+				
+				if(problemLength <= 0){
+					System.out.println("Número inválido repassado!");
+					System.exit(FAIL_EXIT);	
+				}
+				
 				executeTests(problemLength);
 			} catch(NumberFormatException ex){
 				System.out.println("Número inválido repassado!");
@@ -35,7 +41,7 @@ public class Main {
 			}
 		} else {
 			System.out.println("Uso: java -jar CoralReefsTest.jar <tamanho_problema>");
-			System.out.println("<tamanho_problema> deve ser um inteiro");
+			System.out.println("<tamanho_problema> deve ser um inteiro maior que 0");
 			System.exit(FAIL_EXIT);
 		}
 	}
