@@ -8,7 +8,7 @@ public class AlgorithmConvergesTest<S extends Solution<?>> extends AbstractTest<
 
 	public AlgorithmConvergesTest(ExperimentInformation<S> experimentInformation) {
 		super(experimentInformation, null);
-		setName("Algorithm Converges Test");
+		setName("Algorithm Converges");
 	}
 
 	@Override

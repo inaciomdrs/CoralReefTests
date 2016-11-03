@@ -15,7 +15,7 @@ import br.ufrn.imd.experiment.ExperimentInformation;
 import br.ufrn.imd.runner.CROExperimentRunner;
 import br.ufrn.imd.test.AbstractTest;
 import br.ufrn.imd.test.AlgorithmConvergesTest;
-import br.ufrn.imd.test.PopulationExceededLimitsTest;
+import br.ufrn.imd.test.PopulationIsBetweenBoundariesTest;
 import br.ufrn.imd.test.SolutionIsUnderFitnessReferenceTest;
 
 public class Main {
@@ -55,7 +55,7 @@ public class Main {
 			System.out.println(doubleProblem.getName());
 			System.out.println("\tTime Elapsed: " + information.getTimeElapsed() + "ms");
 
-			runTest(new PopulationExceededLimitsTest<>(information));
+			runTest(new PopulationIsBetweenBoundariesTest<>(information));
 			runTest(new SolutionIsUnderFitnessReferenceTest<>(information, 0.5));
 			runTest(new AlgorithmConvergesTest<>(information));
 
