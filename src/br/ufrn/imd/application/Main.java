@@ -21,29 +21,8 @@ import br.ufrn.imd.test.SolutionIsUnderFitnessReferenceTest;
 public class Main {
 
 	public static void main(String[] args) {
-		int FAIL_EXIT = 1;
-		
-		int problemLength;
-		
-		if(args.length == 1){
-			try {
-				problemLength = Integer.parseInt(args[0]);
-				
-				if(problemLength <= 0){
-					System.out.println("Número inválido repassado!");
-					System.exit(FAIL_EXIT);	
-				}
-				
-				executeTests(problemLength);
-			} catch(NumberFormatException ex){
-				System.out.println("Número inválido repassado!");
-				System.exit(FAIL_EXIT);
-			}
-		} else {
-			System.out.println("Uso: java -jar CoralReefsTest.jar <tamanho_problema>");
-			System.out.println("<tamanho_problema> deve ser um inteiro maior que 0");
-			System.exit(FAIL_EXIT);
-		}
+		int problemLength = 10;
+		executeTests(problemLength);
 	}
 
 	public static void executeTests(int problemLength) {
@@ -58,8 +37,9 @@ public class Main {
 		for (DoubleProblem doubleProblem : problems) {
 			information = runExperimentForProblem(doubleProblem);
 
-			System.out.println(doubleProblem.getName());
-			System.out.println("\tTime Elapsed: " + information.getTimeElapsed() + "ms");
+			System.out.print(problemLength + "\t");
+			System.out.print(doubleProblem.getName() + "\t");
+			System.out.print(information.getTimeElapsed() + "\t");
 
 			runTest(new PopulationIsBetweenBoundariesTest<>(information));
 			runTest(new SolutionIsUnderFitnessReferenceTest<>(information, 0.5));
@@ -72,9 +52,9 @@ public class Main {
 	public static void runTest(AbstractTest<DoubleSolution> tester) {
 		try {
 			tester.test();
-			System.out.print("\t" + tester.getName() + " Passed!\n");
+			System.out.print("Passed\t");
 		} catch (AssertionError ex) {
-			System.out.print("\t" + tester.getName() + " Failed!\n");
+			System.out.print("Failed\t");
 		}
 	}
 
