@@ -21,12 +21,31 @@ import br.ufrn.imd.test.SolutionIsUnderFitnessReferenceTest;
 public class Main {
 
 	public static void main(String[] args) {
-		executeTestBattery(10, 100, 10);
+
+		if(args.length != 3){
+			System.out.println("Tá errado... são 3 argumentos");
+			System.exit(1);
+		}
+		
+		try {
+			int min = Integer.valueOf(args[0]);
+			int max = Integer.valueOf(args[1]);
+			int incr = Integer.valueOf(args[2]);
+			
+			if((min >= max) || ((min+incr) >= max)){
+				System.out.println("valores especificados em intervalos bagunçados");
+				System.exit(1);
+			}
+			
+			executeTestBattery(min,max,incr);	
+		} catch(NumberFormatException e){
+			System.out.println("Numeros inválidos");
+		}
 	}
-	
-	public static void executeTestBattery(int minLength, int maxLength, int increment){
-		for (int length = minLength; length < maxLength; length+=increment) {
-			executeTests(length);	
+
+	public static void executeTestBattery(int minLength, int maxLength, int increment) {
+		for (int length = minLength; length <= maxLength; length += increment) {
+			executeTests(length);
 		}
 	}
 
