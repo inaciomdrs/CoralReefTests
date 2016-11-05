@@ -21,8 +21,13 @@ import br.ufrn.imd.test.SolutionIsUnderFitnessReferenceTest;
 public class Main {
 
 	public static void main(String[] args) {
-		int problemLength = 10;
-		executeTests(problemLength);
+		executeTestBattery(10, 100, 10);
+	}
+	
+	public static void executeTestBattery(int minLength, int maxLength, int increment){
+		for (int length = minLength; length < maxLength; length+=increment) {
+			executeTests(length);	
+		}
 	}
 
 	public static void executeTests(int problemLength) {
