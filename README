@@ -1,0 +1,40 @@
+TESTES SOBRE O ALGORITMO DE OTIMIZAÇÃO CORAL REEFS OPTIMIZATION
+
+ABOUT
+-----
+Este projeto tem por objetivo submeter o algoritmo de otimização Coral Reefs 
+Optimization a testes funcionais de modo a verificar a corretude de algumas de 
+suas propriedades. 
+
+Em linhas gerais, o algoritmo irá buscar solucionar quatro problemas de 
+otimização, e durante a execução da resolução de cada problema, informações 
+serão coletadas de modo que os testes sejam efetuados.
+
+O arquivo de formato PDF anexo provê mais detalhes acerca dos testes efetuados.
+
+O programa responsável por executar os testes é o arquivo de formato jar anexo.
+
+REQUIREMENTS
+-------------
+Para executar o arquivo jar, é necessário ter instalado em sua máquina o 
+ambiente de execução JAVA, disponível para download em [JAVA].
+
+USAGE
+-------
+Para executar o programa, abra o terminal, acesse o diretório onde ele se 
+encontra, e digite o comando "java -jar CoralReefsTeste.jar <tamanho_problema>",
+onde "<tamanho_problema>" deverá ser substituido por um número inteiro maior 
+que zero, representando a quantidade de variáveis de decisão com a qual os 
+problemas de otimização irão trabalhar.
+
+A saída estará estruturada da seguinte forma: para cada problema de otimização,
+será impressa inicialmente uma linha constando o nome do problema, seguida de quatro linhas, cada uma constando o nome de um dos critérios testado, bem como o resultado do teste sobre aquele critério.
+
+AUTHORS
+-------
+Aécio Fonseca (aeciogf@gmail.copm)
+Inácio Medeiros (inaciogmedeiros@gmail.com)
+
+REFERENCES
+-----------
+[JAVA] http://www.oracle.com/technetwork/pt/java/javase/downloads/jre8-downloads-2133155.html
